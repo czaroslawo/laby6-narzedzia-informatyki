@@ -63,11 +63,23 @@ def display_tenants(manager):
                 print(f"      • {format_currency(transfer.amount_pln):>15}  Date: {transfer.date}  Period: {month_year}")
 
 
+def display_settlement(manager, apartment, year, month):
+    settlement = manager.get_settlement(apartment, year, month)
+    print(f"Mieszkanie: {apartment}")
+    print(f"Rok: {year}")
+    print(f"Miesiąc: {month}")
+    print(f"Suma do zapłaty: {settlement.total_due_pln}")
+    print(f"Zapłacono: {settlement.total_transfers_pln}")
+    print(f"Bilans: {settlement.balance_pln}")
+
 if __name__ == '__main__':
     parameters = Parameters()
     manager = Manager(parameters)
 
-    display_apartments(manager)
-    display_tenants(manager)
+    # display_apartments(manager)
+    # display_tenants(manager)
+    settlement_parameters = input("Podaj mieszkanie, rok i miesiąc oddzielone spacjami: ").split()
+
+    display_settlement(manager, settlement_parameters[0], int(settlement_parameters[1]), int(settlement_parameters[2]))
     
     print(f"\n{'=' * 70}\n")

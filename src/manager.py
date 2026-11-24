@@ -1,3 +1,4 @@
+from models import Bill
 from src.models import Apartment, Bill, Parameters, Tenant, TenantSettlement, Transfer, ApartmentSettlement
 from typing import List, Tuple
 
@@ -69,6 +70,10 @@ class Manager:
                 year=apartment_settlement.year,
                 total_due_pln=apartment_settlement.total_due_pln / len(tenants_in_apartment)
             )
-        for tenant in tenants_in_apartment ] 
+        for tenant in tenants_in_apartment ]
+
+    def check_deposit(self, tenant: Tenant) -> bool:
+        return tenant.deposit_pln == sum(bill.amount_pln for bill in self.bills if bill.type == "deposit")
+
     
     
